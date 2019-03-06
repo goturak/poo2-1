@@ -33,7 +33,7 @@ int Matrix::getModulo() const {
 
 void Matrix::setElement(int x, int y, int value){
     if(x >= 0 && x < height && y >= 0 && y < width){
-        elements[x][y]= value % modulo;
+        elements[x][y]= ((value % modulo) + modulo) % modulo;
     }
 }
 
@@ -92,20 +92,18 @@ Matrix::Matrix(const Matrix &m2) : width(m2.getWidth()), height(m2.getHeight()),
 std::ostream &operator<<(std::ostream &os, const Matrix &m) {
 
     for(int i=0;i<m.height;i++){
-
         for (int j = 0; j <m.width ; j++) {
-            os<< m.getElement(i,j);
+            os << m.getElement(i,j);
             if(j<m.width-1){
                 os <<" ";
             }
         }
-        ;
+
         if(i<m.height-1){
             os<< std::endl;
         }
 
     }
-
     return os;
 }
 
@@ -167,12 +165,14 @@ Matrix *Matrix::multPtr(Matrix &m2) {
     return result;
 }
 
+
 Matrix Matrix::multValue(Matrix &m2) {
     Multiplication *op= new Multiplication();
     Matrix result(getHeight(),getWidth(),getModulo());
     compute(result,m2,op);
     delete( op);
     return result;
+
 }
 
 
