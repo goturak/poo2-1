@@ -33,7 +33,7 @@ int Matrix::getModulo() const {
 
 void Matrix::setElement(int x, int y, int value){
     if(x >= 0 && x < height && y >= 0 && y < width){
-        elements[x][y]= value % modulo;
+        elements[x][y]= ((value % modulo) + modulo) % modulo;
     }
 }
 
@@ -90,22 +90,19 @@ Matrix::Matrix(const Matrix &m2) : width(m2.getWidth()), height(m2.getHeight()),
 
 
 std::ostream &operator<<(std::ostream &os, const Matrix &m) {
-    os<<"{";
+
     for(int i=0;i<m.height;i++){
-        os<<"{";
         for (int j = 0; j <m.width ; j++) {
-            os<< m.getElement(i,j);
+            os << m.getElement(i,j);
             if(j<m.width-1){
-                os <<",";
+                os << " ";
             }
         }
-        os<<"}";
         if(i<m.height-1){
-            os<<","<< std::endl;
+            os << std::endl;
         }
 
     }
-    os<<"}";
     return os;
 }
 /*
@@ -178,7 +175,7 @@ void Matrix::subInPlace(Matrix &m2) {
 }
 
 bool Matrix::sameMod(Matrix &m2) {
-    return getModulo()==m2.getModulo();
+    return getModulo() == m2.getModulo();
 }
 
 Matrix *Matrix::addPtr(Matrix &m2) {
