@@ -9,6 +9,12 @@
 class Operation {
 public:
     virtual int apply(int i1, int i2)=0;
+
+    virtual ~Operation() {
+
+    }
+
+    Operation() {}
 };
 
 

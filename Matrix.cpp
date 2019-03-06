@@ -5,6 +5,7 @@
 #include "Matrix.hpp"
 
 #include "Operation.hpp"
+#include "Addition.h"
 
 
 int **Matrix::getElements() const {
@@ -36,6 +37,8 @@ void Matrix::setElement(int x, int y, int value){
 int Matrix::getElement(int x, int y)const{
     if(x >= 0 && x < height && y >=0 && y < width){
         return elements[x][y];
+    }else if(y >=0&&x >= 0){
+        return 0;
     }
     return -1;
 }
@@ -84,4 +87,21 @@ std::ostream &operator<<(std::ostream &os, const Matrix &m) {
     return os;
 }
 
+
+void Matrix::calculateInPlace(Matrix &m2, Operation *op ) {
+    int maxHeight= std::max(getHeight(),m2.getHeight());
+    int maxWidth= std::max(getWidth(),m2.getWidth());
+    for (int i = 0; i < maxHeight; i++) {
+        for(int j= 0; j<maxWidth;j++){
+            int elem1= getElement(i,j);
+            int elem2=getElement(i,j);
+            setElement(i,j, op->apply(elem1,elem2));
+        }
+    }
+}
+
+void Matrix::addInPlace(Matrix &m2) {
+    Addition *op= new Addition();
+    calculateInPlace(m2,op);
+}
 

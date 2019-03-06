@@ -7,6 +7,7 @@
 
 
 #include <ostream>
+#include "Operation.hpp"
 
 class Matrix {
 public:
@@ -33,6 +34,7 @@ public:
 
     Matrix(const Matrix &m2);
 
+    void addInPlace(Matrix& m2);
 
 private:
     int width;
@@ -40,6 +42,8 @@ private:
     int modulo;
     int** elements;
 
+
+    void calculateInPlace(Matrix& m2, Operation* op);
 
 };
 
