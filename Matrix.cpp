@@ -1,7 +1,7 @@
 //
 // Created by goturak on 21/02/19.
 //
-
+#include <iostream>
 #include <unistd.h>
 #include "Matrix.hpp"
 
@@ -90,58 +90,24 @@ Matrix::Matrix(const Matrix &m2) : width(m2.getWidth()), height(m2.getHeight()),
 
 
 std::ostream &operator<<(std::ostream &os, const Matrix &m) {
-    os<<"{";
+
     for(int i=0;i<m.height;i++){
-        os<<"{";
+
         for (int j = 0; j <m.width ; j++) {
             os<< m.getElement(i,j);
             if(j<m.width-1){
-                os <<",";
+                os <<" ";
             }
         }
-        os<<"}";
+        ;
         if(i<m.height-1){
-            os<<","<< std::endl;
+            os<< std::endl;
         }
 
     }
-    os<<"}";
+
     return os;
 }
-/*
-
-void Matrix::calculateInPlace(Matrix &m2, Operation *op ) {
-    if(!sameMod(m2)){
-        throw std::invalid_argument("modulos are not equal");
-    }
-    int maxHeight= std::max(getHeight(),m2.getHeight());
-    int maxWidth= std::max(getWidth(),m2.getWidth());
-    resize(maxHeight,maxWidth);
-    for (int i = 0; i < maxHeight; i++) {
-        for(int j= 0; j<maxWidth;j++){
-            int elem1= getElement(i,j);
-            int elem2=m2.getElement(i,j);
-            setElement(i,j, op->apply(elem1,elem2));
-        }
-    }
-}
-
-Matrix* Matrix::calculateWithReturn(Matrix &m2, Operation *op ) {
-    if(!sameMod(m2)){
-            throw std::invalid_argument("modulos are not equal");
-    }
-    int maxHeight= std::max(getHeight(),m2.getHeight());
-    int maxWidth= std::max(getWidth(),m2.getWidth());
-    Matrix *result= new Matrix(maxHeight, maxWidth, getModulo());
-    for (int i = 0; i < maxHeight; i++) {
-        for(int j= 0; j<maxWidth;j++){
-            int elem1= getElement(i,j);
-            int elem2=m2.getElement(i,j);
-            result->setElement(i,j, op->apply(elem1,elem2));
-        }
-    }
-    return result;
-}*/
 
 void Matrix::compute(Matrix &result,Matrix &m2, Operation *op ) {
     if(!result.sameMod(m2)){
@@ -159,32 +125,87 @@ void Matrix::compute(Matrix &result,Matrix &m2, Operation *op ) {
     }
 
 }
-
+bool Matrix::sameMod(Matrix &m2) {
+    return getModulo()==m2.getModulo();
+}
 
 
 void Matrix::addInPlace(Matrix &m2) {
     Addition *op= new Addition();
     compute(*this, m2, op);
-}
-
-void Matrix::multInPlace(Matrix &m2) {
-    Multiplication *op= new Multiplication();
-   // calculateInPlace(m2,op);
-}
-
-void Matrix::subInPlace(Matrix &m2) {
-    Substraction *op= new Substraction();
-   // calculateInPlace(m2,op);
-}
-
-bool Matrix::sameMod(Matrix &m2) {
-    return getModulo()==m2.getModulo();
+    delete( op);
 }
 
 Matrix *Matrix::addPtr(Matrix &m2) {
     Addition *op= new Addition();
     Matrix *result=new Matrix(getHeight(),getWidth(),getModulo());
     compute(*result,m2,op);
+    delete( op);
     return result;
 }
+
+Matrix Matrix::addValue(Matrix &m2) {
+    Addition *op= new Addition();
+    Matrix result(getHeight(),getWidth(),getModulo());
+    compute(result,m2,op);
+    delete( op);
+    return result;
+}
+
+
+
+void Matrix::multInPlace(Matrix &m2) {
+    Multiplication *op= new Multiplication();
+    compute(*this, m2, op);
+}
+
+Matrix *Matrix::multPtr(Matrix &m2) {
+    Multiplication *op= new Multiplication();
+    Matrix *result=new Matrix(getHeight(),getWidth(),getModulo());
+    compute(*result,m2,op);
+    delete( op);
+    return result;
+}
+
+Matrix Matrix::multValue(Matrix &m2) {
+    Multiplication *op= new Multiplication();
+    Matrix result(getHeight(),getWidth(),getModulo());
+    compute(result,m2,op);
+    delete( op);
+    return result;
+}
+
+
+
+void Matrix::subInPlace(Matrix &m2) {
+    Substraction *op= new Substraction();
+    compute(*this, m2, op);
+    delete( op);
+}
+
+Matrix *Matrix::subPtr(Matrix &m2) {
+    Substraction *op= new Substraction();
+    Matrix *result=new Matrix(getHeight(),getWidth(),getModulo());
+    compute(*result,m2,op);
+    delete( op);
+    return result;
+}
+
+Matrix Matrix::subValue(Matrix &m2) {
+    Substraction *op= new Substraction();
+    Matrix result(getHeight(),getWidth(),getModulo());
+    compute(result,m2,op);
+    delete( op);
+    return result;
+}
+
+Matrix::~Matrix() {
+    std::cout << "Destructor is executed\n";
+    for(int i =0;i<height;i++){
+        delete [] elements[i];
+    }
+    delete [] elements;
+}
+
+
 

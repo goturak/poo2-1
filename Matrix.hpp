@@ -30,6 +30,7 @@ public:
 
     friend std::ostream &operator<<(std::ostream &os, const Matrix &matrix);
 
+    virtual ~Matrix();
 
 
     Matrix(int height, int width, int modulo);
@@ -38,8 +39,15 @@ public:
 
     void addInPlace(Matrix& m2);
     Matrix* addPtr(Matrix &m2);
+    Matrix addValue(Matrix &m2);
+
     void multInPlace(Matrix& m2);
+    Matrix* multPtr(Matrix &m2);
+    Matrix multValue(Matrix &m2);
+
     void subInPlace(Matrix& m2);
+    Matrix* subPtr(Matrix &m2);
+    Matrix subValue(Matrix &m2);
 
 private:
     int width;
@@ -50,8 +58,6 @@ private:
 
     bool sameMod(Matrix& m2);
     void compute(Matrix &result,Matrix &m2, Operation *op );
-    void calculateInPlace(Matrix& m2, Operation* op);
-    Matrix* calculateWithReturn(Matrix &m2, Operation *op );
 };
 
 
