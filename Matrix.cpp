@@ -2,7 +2,8 @@
 // Created by goturak on 21/02/19.
 //
 
-#include "Matrix.h"
+#include "Matrix.hpp"
+#include "Operation.hpp"
 
 int **Matrix::getElements() const {
     return elements;
