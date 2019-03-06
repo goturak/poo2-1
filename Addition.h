@@ -8,7 +8,7 @@
 
 #include "Operation.hpp"
 
-class Addition: Operation{
+class Addition: public Operation{
     public:
     int apply(int i1 , int i2);
 };

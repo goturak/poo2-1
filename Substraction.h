@@ -8,7 +8,7 @@
 
 #include "Operation.hpp"
 
-class Substraction: Operation {
+class Substraction:public  Operation {
     int apply(int i1, int i2);
 };
 
