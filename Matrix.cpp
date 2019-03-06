@@ -4,6 +4,9 @@
 
 #include "Matrix.hpp"
 
+#include "Operation.hpp"
+
+
 int **Matrix::getElements() const {
     return elements;
 }

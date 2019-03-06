@@ -28,6 +28,7 @@ public:
     friend std::ostream &operator<<(std::ostream &os, const Matrix &matrix);
 
 
+
     Matrix(int height, int width, int modulo);
 
     Matrix(const Matrix &m2);
