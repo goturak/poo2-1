@@ -25,6 +25,8 @@ public:
     void setElement(int x, int y, int value);
     int getElement(int x, int y) const;
 
+    void resize(int h, int w);
+
 
     friend std::ostream &operator<<(std::ostream &os, const Matrix &matrix);
 

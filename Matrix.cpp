@@ -43,6 +43,24 @@ int Matrix::getElement(int x, int y)const{
     return -1;
 }
 
+void Matrix::resize(int h, int w) {
+    int** newElements = new int*[h];
+
+    for(int i = 0; i < h; i++){
+        newElements[i] = new int[w];
+        for(int j = 0; j < w; j++){
+            if(i < height && j < width) {
+                newElements[i][j] = elements[i][j];
+            } else {
+                newElements[i][j] = 0;
+            }
+        }
+    }
+    this->elements = newElements;
+    this->height = h;
+    this->width = w;
+}
+
 Matrix::Matrix(int height, int width, int modulo) : height(height), width(width), modulo(modulo) {
     elements = new int*[height];
     srand(time(NULL));
