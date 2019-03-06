@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Matrix.h"
+#include "Matrix.hpp"
 int main() {
 
     Matrix* m= new Matrix(3,4,6);

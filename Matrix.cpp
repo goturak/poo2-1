@@ -2,7 +2,7 @@
 // Created by goturak on 21/02/19.
 //
 
-#include "Matrix.h"
+#include "Matrix.hpp"
 
 int **Matrix::getElements() const {
     return elements;
