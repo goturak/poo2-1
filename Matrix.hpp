@@ -47,8 +47,9 @@ private:
     int** elements;
 
 
+    bool sameMod(Matrix& m2);
     void calculateInPlace(Matrix& m2, Operation* op);
-
+    void calculateWithReturn(Matrix &m2, Operation *op );
 };
 
 
