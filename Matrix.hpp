@@ -37,6 +37,8 @@ public:
     Matrix(const Matrix &m2);
 
     void addInPlace(Matrix& m2);
+    void multInPlace(Matrix& m2);
+    void subInPlace(Matrix& m2);
 
 private:
     int width;

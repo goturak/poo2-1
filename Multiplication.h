@@ -8,7 +8,7 @@
 
 #include "Operation.hpp"
 
-class multiplication:public  Operation {
+class Multiplication:public  Operation {
     int apply(int i1, int i2) ;
 };
 
