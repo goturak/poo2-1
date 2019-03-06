@@ -37,6 +37,7 @@ public:
     Matrix(const Matrix &m2);
 
     void addInPlace(Matrix& m2);
+    Matrix* addPtr(Matrix &m2);
     void multInPlace(Matrix& m2);
     void subInPlace(Matrix& m2);
 
@@ -48,8 +49,9 @@ private:
 
 
     bool sameMod(Matrix& m2);
+    void compute(Matrix &result,Matrix &m2, Operation *op );
     void calculateInPlace(Matrix& m2, Operation* op);
-    void calculateWithReturn(Matrix &m2, Operation *op );
+    Matrix* calculateWithReturn(Matrix &m2, Operation *op );
 };
 
 

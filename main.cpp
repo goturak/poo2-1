@@ -6,12 +6,15 @@ int main() {
     Matrix* m= new Matrix(3,4,6);
 
 
-    Matrix* m2 = new Matrix(5,4,7);
+    Matrix* m2 = new Matrix(5,4,6);
 
-    std::cout << *m << std::endl<<std::endl;
+
+    Matrix* m3= m->addPtr(*m2);
+   std::cout << *m << std::endl<<std::endl;
     std::cout << *m2 << std::endl<<std::endl;
+    std::cout << *m3 << std::endl<<std::endl;
 
-    m->multInPlace(*m2);
+    m->addInPlace(*m2);
     std::cout << *m ;
 
 

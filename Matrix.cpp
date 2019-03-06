@@ -108,7 +108,7 @@ std::ostream &operator<<(std::ostream &os, const Matrix &m) {
     os<<"}";
     return os;
 }
-
+/*
 
 void Matrix::calculateInPlace(Matrix &m2, Operation *op ) {
     if(!sameMod(m2)){
@@ -126,7 +126,7 @@ void Matrix::calculateInPlace(Matrix &m2, Operation *op ) {
     }
 }
 
-void Matrix::calculateWithReturn(Matrix &m2, Operation *op ) {
+Matrix* Matrix::calculateWithReturn(Matrix &m2, Operation *op ) {
     if(!sameMod(m2)){
             throw std::invalid_argument("modulos are not equal");
     }
@@ -137,29 +137,54 @@ void Matrix::calculateWithReturn(Matrix &m2, Operation *op ) {
         for(int j= 0; j<maxWidth;j++){
             int elem1= getElement(i,j);
             int elem2=m2.getElement(i,j);
-            setElement(i,j, op->apply(elem1,elem2));
+            result->setElement(i,j, op->apply(elem1,elem2));
         }
     }
+    return result;
+}*/
+
+void Matrix::compute(Matrix &result,Matrix &m2, Operation *op ) {
+    if(!result.sameMod(m2)){
+        throw std::invalid_argument("modulos are not equal");
+    }
+    int maxHeight= std::max(getHeight(),m2.getHeight());
+    int maxWidth= std::max(getWidth(),m2.getWidth());
+    result.resize(maxHeight,maxWidth);
+    for (int i = 0; i < maxHeight; i++) {
+        for(int j= 0; j<maxWidth;j++){
+            int elem1= getElement(i,j);
+            int elem2=m2.getElement(i,j);
+            result.setElement(i,j, op->apply(elem1,elem2));
+        }
+    }
+
 }
 
 
 
 void Matrix::addInPlace(Matrix &m2) {
     Addition *op= new Addition();
-    calculateInPlace(m2,op);
+    compute(*this, m2, op);
 }
 
 void Matrix::multInPlace(Matrix &m2) {
     Multiplication *op= new Multiplication();
-    calculateInPlace(m2,op);
+   // calculateInPlace(m2,op);
 }
 
 void Matrix::subInPlace(Matrix &m2) {
     Substraction *op= new Substraction();
-    calculateInPlace(m2,op);
+   // calculateInPlace(m2,op);
 }
 
 bool Matrix::sameMod(Matrix &m2) {
     return getModulo()==m2.getModulo();
+}
+
+Matrix *Matrix::addPtr(Matrix &m2) {
+    Addition *op= new Addition();
+    Matrix *result=new Matrix(getHeight(),getWidth(),getModulo());
+    compute(*result,m2,op);
+    return result;
 }
 
